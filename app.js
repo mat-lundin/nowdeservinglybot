@@ -1,4 +1,6 @@
-const Twitter = require('twitter');
+
+require('dotenv').config();
+const Twitter = require('twitter-v2');
 const config = {
     consumer_key: process.env.consumer_key,
     consumer_secret: process.env.consumer_secret,
@@ -7,7 +9,10 @@ const config = {
   }
 
 // pass config vars to a new instance of the Twitter class
-const T = new Twitter(config);
+const client = new Twitter({
+    bearer_token: process.env.bearer_token
+});
+
 
 // declare search parameters
 var params = {
@@ -18,11 +23,15 @@ var params = {
   };
 
 // make the request
-T.get('search/tweets', params, function(err, data, response) {
-    if(!err){
-      // This is where the magic will happen
-      console.log(data);
-    } else {
-      console.log(err);
-    }
-  });
+async function getTweet(){
+    const { data } = await client.get('tweets', { ids: '1228393702244134912' });
+console.log(data);
+};
+
+// post a tweet
+async function postTweet(){
+    const { data } = await client.get('tweets', );
+console.log(data);
+};
+
+getTweet()
